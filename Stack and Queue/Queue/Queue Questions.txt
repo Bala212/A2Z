@@ -1,0 +1,245 @@
+1) Reverse a Queue
+https://practice.geeksforgeeks.org/problems/queue-reversal/1
+// Same as stack!!
+class Solution
+{
+    public:
+    
+    void reverse(queue<int> &q){
+        if(q.empty()) return;
+        
+        int num = q.front();
+        q.pop();
+        reverse(q);
+        q.push(num);
+        
+    }
+    
+    queue<int> rev(queue<int> q)
+    {
+        reverse(q);
+        return q;
+    }
+};
+-------------------------------------------------------------------------------------
+2) First negative integer in every window of size k
+https://practice.geeksforgeeks.org/problems/first-negative-integer-in-every-window-of-size-k3345/1
+vector<long long> printFirstNegativeInteger(long long int A[],
+                                             long long int n, long long int k) {
+    deque<int> dq; // we can use queue also, as here there is no need to deal with back of queue
+    // We deal with back of queue using deque when we want max or min of window 
+    vector<long long> ans;
+    
+    for(int i = 0;i<n;i++){
+        // removal of out of window element
+        if(!dq.empty() && dq.front() == i - k){
+            dq.pop_front();
+        }
+        
+        // Addition of index of current element, if it's negtive
+        if(A[i]<0) dq.push_back(i);
+        
+        
+        
+        // start taking when we reach the first window and onwards
+        // Basically, this is for first window
+        if(i>=k-1){
+            // if dq is empty, that means this window does not have -ve element
+            // so store 0, else store element at front of deque which will be first
+            // -ve element in current window
+            if(dq.empty()) ans.push_back(0);
+            else ans.push_back(A[dq.front()]);
+        }
+    }
+    
+    return ans;
+    // TC - O(2*n)
+    // SC - O(k)
+ }
+-------------------------------------------------------------------------------------
+3) Reverse First K elements of Queue
+https://practice.geeksforgeeks.org/problems/reverse-first-k-elements-of-queue/1
+void rec(queue<int> &q, int k){
+    if( k == 0) return ;
+    
+    int num = q.front();
+    q.pop();
+    rec(q,k-1);
+    q.push(num);
+}
+
+// Function to reverse first k elements of a queue.
+// 1 2 3 4 5
+queue<int> modifyQueue(queue<int> q, int k) {
+    
+    // 1 2 3 4 5
+    
+    rec(q,k); // 4 5 3 2 1
+    
+    // we have to put n-k elements again back to queue
+    int temp = q.size()-k;
+    while(temp--){
+        q.push(q.front()); // 3 2 1 4 5
+        q.pop();
+    }
+    
+    return q;
+}
+-------------------------------------------------------------------------------------
+4) Sliding Window Maximum
+https://leetcode.com/problems/sliding-window-maximum/
+https://www.youtube.com/watch?v=xFJXtB5vSmM&list=PL_z_8CaSLPWeM8BDJmIYDaoQ5zuwyxnfj&index=6
+See this video from 36 minutes, to get idea in short.
+
+    vector<int> maxSlidingWindow(vector<int>& nums, int k) {
+        int n = nums.size();
+        vector<int> ans;
+        // We wre using deque bcoz, here we want to deal with entire window of size k
+        // i.e. to fetch maximum among k window size, for that we need to also pop
+        // some elements from back as well, which are smaller than incoming.
+        // And to store the maximums for next window.
+        int left = 0, right = 0;
+        deque<int> dq;
+        while(right<n){
+            // nums[j] se jitne smaller elements present hein queue mein, unko pop karo
+            // wo kuch kaam ke nahi hein, aage bhi kaam me nahi aane vale!!
+            while(dq.size()>0  && dq.back() < nums[right]){
+                dq.pop_back();
+            }
+
+            // Chote elements nikalne ke baad num[j] ko push karo
+            dq.push_back(nums[right]);
+            
+            // Window size choti hein, usko badhao
+            if(right - left +1 < k) right ++;
+
+            // K ki window mil gai!!
+            else if(right - left +1 == k){
+                // Push the front of dq, as it will be largest of the window(ensure while pushing
+                // elements in deque, as we are popping smaller elements than pushing element). 
+                ans.push_back(dq.front());
+
+                // 2) Slide the window
+                // If left index of current window index of larget element of current window
+                // Then we need to pop it, as we are sliding the window
+                // So, Remove the index present in front of deque.
+                if(nums[left] == dq.front()) dq.pop_front();
+                // slide window, by moving left and right pointer ahead by 1
+                left++;
+                right++;
+            }
+        }
+        return ans;
+
+        // Basically, we are storing elements in decreasing fashion inside queue,
+        // so that element at front will always be maximum.
+
+        // T.C-> O(2*N)
+        // S.C-> O(K)
+    }
+-------------------------------------------------------------------------------------
+4) Sum of minimum and maximum elements of all subarrays of size k
+https://www.codingninjas.com/studio/problems/sum-of-minimum-and-maximum-elements-of-all-subarrays-of-size-k_1171047?leftPanelTab=1
+long long sumOfMaxAndMin(vector<int> &nums, int n, int k) {
+	deque<long long>mini, maxi;
+    long long ans=0;
+    
+    
+     for(int i=0; i<n; i++)
+     {
+         // check for out of bound for front index inside queue
+         if(!mini.empty() && mini.front()==i-k)
+         {
+            mini.pop_front();
+         }
+         if(!maxi.empty() && maxi.front()==i-k)
+         {
+            maxi.pop_front();
+         }
+         // remove indexes of elements from back which are greater than or equal to nums[i]
+         while(!mini.empty() && nums[mini.back()]>nums[i])
+        {
+            mini.pop_back();
+        }
+        // remove indexes of elements from back which are less than or equal to nums[i]
+        while(!maxi.empty() && nums[maxi.back()]<nums[i])
+        {
+            maxi.pop_back();
+        }
+        // push current indexes into deque
+        mini.push_back(i);
+        maxi.push_back(i);
+
+        // Create first window, then start adding
+        // start taking maximums when we reach the first window and onwards
+        // Basically, this is for first window
+        if(i>=k-1) ans+=nums[mini.front()]+nums[maxi.front()];
+         
+     }
+    return ans;
+    // Basically, we are storing elements in decreasing fashion inside max queue,
+    // so that element at front will always be maximum.
+    // Vice versa for minqueue
+}
+    // Time Complexity: O(2*N)  one for traversing array, another for popping from deque 
+    // in total.
+    // Space Complexity: O(K)
+-------------------------------------------------------------------------------------
+5) Interleave the First Half of the Queue with Second Half
+https://practice.geeksforgeeks.org/problems/interleave-the-first-half-of-the-queue-with-second-half/1?utm_source=gfg&utm_medium=article&utm_campaign=bottom_sticky_on_article
+
+    vector<int> rearrangeQueue(queue<int> &q){
+        int n = q.size();
+        vector<int>ans(n);
+	// store first half of queue at even indexes
+        for(int i=0; i<n; i+=2){
+            ans[i] = q.front();
+            q.pop();
+        }
+	// store second half of queue at odd indexes
+        for(int i=1; i<n; i+=2){
+            ans[i] = q.front();
+            q.pop();
+        }
+        return ans;
+    } 
+    // TC - O(N)
+    // SC - O(1)
+-------------------------------------------------------------------------------------
+6) First non-repeating character in a stream
+https://practice.geeksforgeeks.org/problems/first-non-repeating-character-in-a-stream1216/1
+string FirstNonRepeating(string A)
+{
+    int count[26] = {0};
+    queue<char> q;
+    string ans;
+    for (auto &ch : A)
+    {
+
+        // We have to first of all push current char in queue, to precess this also
+        // it may happen that all character in queue and current character also having
+        // frequency greater than 1
+        // but if pushed later, it will not be considered
+        q.push(ch);
+        // increase the count of current char till current stream
+        // ch-'a' means --> a-0, b-1, c-2, and so on
+        count[ch - 'a']++;
+
+        //  pop chars having count more than 1, as we want non-repeating character
+        while (!q.empty() && count[q.front() - 'a'] > 1)
+        {
+            q.pop();
+        }
+
+        // if queue is empty, that means this window have all repeating chracters
+        //  so store #, else store front of queue, which is character with freq 1
+        if (q.empty())
+            ans += '#';
+        else
+            ans += q.front();
+    }
+    return ans;
+}
+// TC - O(N)
+// SC - O(26*2);
+

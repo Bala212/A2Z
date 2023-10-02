@@ -1,0 +1,388 @@
+Binary number:Numbers conataining 1's and 0's
+-------------------------------------------------------------------------------
+1) Decimal to Binary:
+void toBinary(int N)
+{
+    int ans = 0;
+    int i = 0;
+    while(N){
+        int bit = N&1;
+        ans = bit*pow(10,i++) + ans;
+        N = N>>1;
+    }
+    cout<<ans;
+}
+OR
+void decToBinary(int n)
+{
+    // loop from 31, as we want left most bit first.
+    for(int i=31; i>=0; i--){
+        cout<< ( (num >> i) & 1);  
+    }
+}
+----------------------------------------------------------------------------
+2) Binary to Decimal:
+*Binary to Decimal
+int binaryToDecimal(int n)
+{
+    int dec_value = 0;
+  
+    // Initializing base value to 
+    // 1, i.e 2^0
+    int base = 1;
+  
+    int temp = n;
+    while (temp) 
+    {
+        int last_digit = temp % 10;
+        temp = temp / 10;
+        dec_value += last_digit * base;
+        base = base * 2;
+    }
+  
+    return dec_value;
+}
+		OR
+    int binary_to_decimal(string str) {
+        int k = 0;
+        int ans = 0;
+        for(int i = str.size()-1;i>=0; i--){
+            if(str[i] == '1'){
+                ans += pow(2, k);
+            }
+            k++;
+        }
+        return ans;
+    }
+
+    int binary_to_decimal(string str) {
+        int k = 0;
+        int ans = 0;
+        for(int i = str.size()-1;i>=0; i--){
+            if(str[i] == '1'){
+                ans += (1<<k); //////THIS ONE 3rd point
+            }
+            k++;
+        }
+        return ans;
+    }
+----------------------------------------------------------------------------
+     AND  OR   XOR
+0 0   0   0     0
+0 1   0   1     1
+1 0   0   1     1
+1 1   1   1     0
+
+Left shift:
+3<<1 = 110
+3<<2 = 1100
+
+Similar is right shift.
+
+
+-----------------------------------------------------------------------------
+3) 1<<n = 2^n
+----------------------------------------------------------------------------
+4) INT can store 32 bits, and long long can store 64 bits. 
+
+*If there are n bits, we can generate 2^n-1 numbers!!
+In signed int, 1 bit is reserve for sign( +ve or -ve) if it is 1 then number is -ve.
+Hence, possible numbers are 2^31 - 1
+
+Unsigned int only stores positive integers! So it can store 2^32-1 numbers.
+-------------------------------------------------------------------------------
+*A number n has, logn bits in it's binary representation.
+--------------------------------------------------------------------------------
+LSB-> right
+MSB- -> left
+
+set - 1
+unset - 0
+
+--------------------------------------------------------------------------------
+Questions:
+*Basic operations( get, set, unset)
+vector<int> bitManipulation(int num, int i){
+    // Create a vector to store the results of the bit manipulation.
+    vector<int> ans;
+    
+    // Initialize variables to store the results of the get, set, and clear operations.
+    int get = 0, set = 0, clear = 0;
+    
+    // Create a mask with a 1 in the 'i'th position and 0s in all other positions.
+    int mask = (1 << (i-1));
+        
+    // Check if the 'i'th bit in 'num' is set (i.e., equals 1) by using the bitwise 
+    // AND operator with the mask.
+    // Non zero number aya, to set hein!!
+    if(num & mask) {
+        get = 1; 
+    }
+    
+    // Set the 'i'th bit in 'num' by using the bitwise OR operator with the mask.
+    set = (num | mask);
+    
+    // Clear the 'i'th bit in 'num' by using the bitwise AND operator with the complement of the mask.
+    // We are teking complement becuase we want 0 at ith postion in mask, and when done 
+    // & with mask, we clear the bit i.e. set it to 0!!
+    clear = (num & (~mask)); 
+    
+    // Push the results of the 'get', 'set', and 'clear' operations to the vector.
+    ans.push_back(get);
+    ans.push_back(set);
+    ans.push_back(clear); //UNSET
+    
+    // Return the vector containing the results.
+    return ans;
+}
+/*  
+    Time Complexity : O(1)
+    Space Complexity : O(1)
+*/
+-------------------------------------------------------------------------------------------------------------------------------------------------------------------
+*2 ki power vale numbers se pehle jo bhi number hote hein, unke saare bits 1 hote hein!!
+Ex: 3, 15, 31 ... ke saare bits 1 hein!!
+-------------------------------------------------------------------------------------------------------------------------------------------------------------------
+*i'th bit set hein ya nahi?
+if( (a&(1<<i)) != 0)-> set
+else not set
+
+OR
+
+if((num & (1<<i))){
+  set
+}
+else{
+  unset
+}
+
+*set ith bit
+num = num | (1<<i);
+
+*unset ith bit
+num = num & ~(1<<i);
+
+*toggle ith bit(flip 0 to 1 and 1 to 0)
+num = num ^ (1<<i);
+-------------------------------------------------------------------------------------------------------------------------------------------------------------------
+*Toggle i'th bit ( 0 cha 1, 1 cha 0)
+mask create kar ( 1<<i) ani xor ghe tya number sobat! 0 asel tr one hoel, 0 asel tr zero hoel,karan ith position vr apan 1 thevat ahe mask chya
+-------------------------------------------------------------------------------------------------------------------------------------------------------------------
+*Count set bits of a:
+int ct = 0;
+// loop from 31, as we want left most bit first.
+while( int i = 31; i>=0;i--){
+   if( a&(1<<i) != 0) ct++;
+}
+cout<<ct<<endl;
+
+OR
+
+int ct=0;
+while(n!=0){
+   if(n&1) ct++; 
+   n = n>>1;
+}
+TC-O(log2(n))
+
+OR
+
+__builtin_popcount(a)
+
+OR
+
+while(n!=0){
+   n = (n &(n-1))
+   	ct++;
+}
+print(ct)
+TC-O(setbits)
+-------------------------------------------------------------------------------------------------------------------------------------------------------------------
+*Check whether K-th bit is set or not
+
+bool isKthBitSet(int n, int k)
+{
+
+    // n = 0 1 1 1 (7), k = 3
+
+    int mask = 1 << (k-1); // left shift 1 by 3
+    // mask = 0 1 0 0 
+
+    // If kth bit of n is set, i will return 1, otherwise 0
+    return n & mask;;
+}
+/*
+    Time complexity: O( K )
+    Space complexity: O( 1 )
+    
+    Where 'K' is Bit number we have to check.
+*/
+-------------------------------------------------------------------------------------------------------------------------------------------------------------------
+*Odd Even
+string oddEven(int N){
+    if(N&1) return "odd";
+    return "even";
+}
+/*
+    Time complexity: O( 1 )
+    Space complexity: O( 1 )
+*/
+// it is faster than %
+-------------------------------------------------------------------------------------------------------------------------------------------------------------------
+*Divide and multiply n by 2
+int x = n>>1; // divide by 2
+int y = n<<1; // multiply by 2
+-------------------------------------------------------------------------------------------------------------------------------------------------------------------
+*Uppercase to Lowercase and vice versa
+A-> 00001000001
+a-> 00001100001
+
+B-> 00001000010
+b-> 00001100010
+
+We can see that 5th bit (0-based) from right is set in lower case letters
+So we can easily shift between upper to lower and lower to upper by setting/unsetting 5th bit from right, respectively.
+
+char A = 'A';
+char a = A|(1<<5); // set 5th bit to get lower case
+
+char a = 'a';
+char A = a&(~(1<<5)); // unset 5th bit to get upper case
+
+1<<5 and ~(1<<5) can be replaced by their corresponding character
+1<<5 -> ' ' (empty space)
+~(1<<5) -> '_' ( underscore, but here bits till 5th bit are 0 but we don't need them so chal jayega)
+
+S0,
+Upper to lower-> ch|' '
+Lower to upper -> ch&'_'
+-------------------------------------------------------------------------------------------------------------------------------------------------------------------
+*i'th number tak LSB clear karo->
+00000111011, i = 4(0-based)
+should be & with 11111100000
+so we can generate-> 00000011111 and take ~ of this.
+00000011111 can be generated with 00000100000 - 1
+so -> b = (a & (~((1<<(i+1)) - 1));
+
+*i'th number tak MSB clear karo->
+00000111011, i = 3(0-based)
+should be & with 00000001111
+so we can generate-> 00000001111 and this
+can be generated with 00000100000 - 1
+so -> b = (a & ((1<<(i+1)) - 1));
+-------------------------------------------------------------------------------------------------------------------------------------------------------------------
+*Check power of two
+if n is a power of two, the n&(n-1) will be zero.
+If, n=16
+16 -> 00010000
+15 -> 00001111
+16&15 = 00000000, so 16 is a power of two.
+-------------------------------------------------------------------------------------------------------------------------------------------------------------------
+*unset the last set bit of number
+int number = n&(n-1);
+
+*For any unsigned integer n, the operation n&(n-1) would turn off the rightmost 
+set bit in n.
+
+*For any integer n, the binary representation of (n-1) would have all the bits 
+flipped after the rightmost set bit (including the rightmost set bit) in n. So, 
+performing bitwise "and" operation on n and (n-1) would give us the required result.
+	
+Also-:
+*The expression (num&(-num)) finds the position of the last set bit in the number num.
+*int unsetNum = num & ~(1 << position);
+-------------------------------------------------------------------------------------------------------------------------------------------------------------------
+#XOR operator:
+1) XOR with same number is 0.
+2) XOR with 0 is a number itself.
+-> x^x = 0 and x^0 = x
+
+*Swap two numbers a and b, using XOR
+a = a^b
+b = b^a // b^(a^b) --> a
+a = a^b //(a^b)^a --> b
+ 
+*Use xor to find odd occuring element, rest all elements are even occuring.
+-> XOR all elements, you will left off with required element.
+-------------------------------------------------------------------------------------------------------------------------------------------------------------------
+#Bitmask
+there are types of food like 0,1,2..upto 63
+1st 2,3,1  mask1 1110
+2nd 0,1,2  mask2 0111
+3rd 1,3    mask3 1010
+we will store each number in mask
+to find common fruits in all 3 friends then we will take and of all
+0010->1st fruit is common
+
+*there are n workers working for 30 days in month find the maximum common days the two workers working.
+->naive way n^2*30
+->optimised n^2
+vector<int>mask(n,0);
+for(int i=0; i<n; i++){
+   int num_workers;
+   cin>>num_workers;
+   int mask = 0;
+   for(int j=i+1; j<num_workers; j++){
+   	int day;
+   	cin>>day; 
+   	mask = (mask | (1<<day));
+   }
+   masks[i] = mask;
+}
+   for(int i=0; i<n; i++){
+   	for(int j=i+1; j<n; j++){
+   		int intersection = (mask[i] & mask[j]);
+   		int common_days = __buitin_popcount(intersection);
+   		max_days = max(max_days,common_days);
+   	}
+   }
+cout<<max_days<<endl;
+----------------------------------------------------------------------------------------------------------------------------------
+*given n. print xor of all numbers between 1 and n
+if(n%4==0) print n
+if(n%4==1) print 1
+if(n%4==2) print n+1
+if(n%4==3) print 0
+----------------------------------------------------------------------------------------------------------------------------------
+*Subset generation using bitmask
+// subset generation using bitmask
+// [2,4,5] --> 2^3 subsets
+--> index of bitmasks start from 0 and from right to left
+// 000 [] -> none indexes are taken
+// 001 [2] -> 0th index is taken	
+// 010 [4] -> 1st index is taken
+// 011 [2,4] -> 0th and 1st indexes are taken
+// 100 [5] -> 2nd index is taken
+// 101 [2,5] -> 0th ans 2nd indexes are taken
+// 110 [4,5] -> 1st and 2nd indexes are taken 
+// 111 [2,4,5] -> all indexes are taken
+
+    vector<vector<int>> subsets(vector<int>& nums) {
+        int n = nums.size();
+        int subset_ct = (1<<n);
+        vector<vector<int>>ans;
+        for(int mask=0; mask<subset_ct; mask++){
+            vector<int>subset;
+            for(int j=0; j<n; j++){
+                if(mask & (1<<j)){
+                    subset.push_back(nums[j]);
+                }
+            }
+            ans.push_back(subset);
+        }
+        return ans;
+            
+        }
+    // TC - O(N*2^N)
+
+
+
+
+
+
+
+
+
+
+
+

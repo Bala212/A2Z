@@ -1,0 +1,358 @@
+1.Sort Characters by frequency
+
+// Solution 1-> Not so optimal
+string frequencySort(string s)
+{
+    // Create a map
+    unordered_map<char, int> m;
+    int n = s.size();
+    // Store count of characters
+    for (int i = 0; i < n; i++)
+    {
+        m[s[i]]++;
+    }
+    // Declare vector of pair to sort characters by ther frequency
+    // First element of pair should be frequency
+    vector<pair<int, char>> v;
+    for (auto &val : m)
+    {
+        v.push_back({val.second, val.first});
+    }
+    // Sort the vector in decreasing fashion
+    sort(v.begin(), v.end(), greater<pair<int, char>>());
+    string ans = "";
+    // Push the characters in string, frequency times!!
+    for (auto &val : v)
+    {
+        for (int i = 0; i < val.first; i++)
+        {
+            ans += val.second;
+        }
+    }
+    // return the ans string
+    return ans;
+}
+// T.C-> O(2*N) + O(N*logN) + O(distinctChars*N) -> depending upon the map
+// S.C-> O(3*N) -> map,vector,ans
+
+Solution 2 -> A bit optimal in space, here we are not using map
+string frequencySort(string s)
+{
+    // Declare vector of pair
+    // First element of pair should be frequency
+    vector<pair<int, char>> v(123); // last char 'z' has ascii value 122
+    for (auto &ch : s)
+    {
+        // Increase the first value (frequency) of char by one
+        v[ch].first++;
+        // If its the first time we are visiting this character, store the character
+        if (v[ch].first == 1)
+            v[ch].second = ch;
+    }
+    // Sort the vector in decreasing fashion
+    sort(v.begin(), v.end(), greater<pair<int, char>>());
+    string ans = "";
+    // Push the characters in string, frequency times!!
+    for (auto &val : v)
+    {
+        for (int i = 0; i < val.first; i++)
+        {
+            ans += val.second;
+        }
+    }
+    // return the ans string
+    return ans;
+}
+// T.C-> O(N) +O(N*logN) + O(distinctChars*N) -> depending upon the map
+// S.C-> O(2*N) -> map,vector,ans
+--------------------------------------------------------------------------------------------------
+2. Maximum Nesting Depth of Paranthesis
+
+keep on counting opening brackets and decrease count when closing is 
+encountered, and everytime we will update our answer as maximum cnt,
+this ans will be max of all the opening brackects in each set of valid paranthesis
+
+int maxDepth(string s)
+{
+    // ans will store maximum depth, and cnt is used for counting depth everytime
+    int ans = INT_MIN, cnt = 0;
+    for (int i = 0; i < s.size(); i++)
+    {
+        // If '(' then cnt will increase indicating depth
+        if (s[i] == '(')
+            cnt++;
+        // We are alose decreasing cnt when ')' bcoz we need to check
+        // for other valid paranthesis too i.e when cnt == 0 we completed
+        // one set of valid paranthesis
+        if (s[i] == ')')
+            cnt--;
+        // Update the ans to maximum cnt i.e max depth
+        ans = max(ans, cnt);
+    }
+    return ans;
+}
+// T.C-> O(N)
+// S.C-> O(1)
+--------------------------------------------------------------------------------------------------
+3.Roman to Integer
+
+int romanToInt(string s)
+{
+    unordered_map<char, int> m{
+        {'I', 1},
+        {'V', 5},
+        {'X', 10},
+        {'L', 50},
+        {'C', 100},
+        {'D', 500},
+        {'M', 1000}};
+    int ans = 0;
+    for (int i = 0; i < s.size(); i++)
+    {
+        // for cases such as IV,CM, XL, etc...
+        if (m[s[i]] < m[s[i + 1]])
+            ans -= m[s[i]];
+        else
+            ans += m[s[i]];
+    }
+    return ans;
+}
+// TC-> O(N) or O(N*logN) -> depending upon the type of map
+// S.C-> O(7) -> map
+--------------------------------------------------------------------------------------------------
+4.String to Integer (atoi)
+
+int myAtoi(string s)
+{
+    int n = s.size();
+    int i = 0;
+    double ans = 0;
+    // Ignore blank spaces
+    while (s[i] == ' ')
+    {
+        i++;
+    }
+
+    // Check for sign's
+    bool positive = s[i] == '+';
+    bool negative = s[i] == '-';
+    positive == true ? i++ : i;
+    negative == true ? i++ : i;
+
+    // Extract answer finding digits
+    while (i < n && s[i] >= '0' && s[i] <= '9')
+    {
+        ans = ans * 10 + (s[i] - '0');
+        i++;
+    }
+    // If negative sign was found, make it negative
+    if (negative == 1)
+        ans = -1 * ans;
+    // If ans exceeds integer limits, replace them with those limits
+    if (ans > INT_MAX)
+        ans = INT_MAX;
+    if (ans < INT_MIN)
+        ans = INT_MIN;
+    return (int)ans;
+}
+// T.C->O(N)
+// S.C->O(1)
+--------------------------------------------------------------------------------------------------
+5) Count With K Different Characters
+
+Sliding window->
+int atMost(int k, string &s){
+    int count = 0;
+    unordered_map<char, int> m;
+
+    int l = 0, r = 0;
+
+    int ans = 0;
+
+    while(r<s.size()){
+        m[s[r]]++;
+        if(m[s[r]] == 1) count++;
+
+        while(l<=r && count > k){
+            m[s[l]]--;
+            if(m[s[l]] == 0){
+                count--;
+            }
+            l++;
+        }
+        r++;
+        if(count <= k) ans += r - l + 1;
+    }
+    return ans;
+}
+
+int countSubStrings(string str, int k) 
+{
+    return atMost(k, str) - atMost(k-1, str);
+}
+
+// T.C-> O(2*N)
+// S.C-> O(1)
+--------------------------------------------------------------------------------------------------
+6. Longest Palindromic Substring [Do it without DP]
+
+string longestPalindrome(string s)
+{
+    int n = s.size();
+    int maxLen = 0;
+    int start = -1, end = -1;
+    for (int i = 0; i < n; i++)
+    {
+        // ODD LENGTH
+        int low = i;
+        int high = i;
+        // "babad" each char will act as center of palindrome and do check
+        // for continuation of palindrome
+        while (low >= 0 && high < n && s[low] == s[high])
+        {
+            low--;
+            high++;
+        }
+        // Calculate the length of a palindrome and maximize it
+        int len = high - low - 1;
+        if (len > maxLen)
+        {
+            maxLen = len;
+            // Store index of palindrime to fetch it later
+            start = low + 1;
+            end = high - 1;
+        }
+
+        // EVEN LENGTH
+        low = i;
+        high = i + 1;
+        // "cbbd" each pair of cha will act as center of palindrome and
+        // do check for continuation of palindrome
+        while (low >= 0 && high < n && s[low] == s[high])
+        {
+            low--;
+            high++;
+        }
+        // Calculate the length of a palindrome and maximize it
+        len = high - low - 1;
+        if (len > maxLen)
+        {
+            maxLen = len;
+            // Store index of palindrime to fetch it later
+            start = low + 1;
+            end = high - 1;
+        }
+    }
+    // Fetch the palindrome
+    string ans = "";
+    for (int i = start; i <= end; i++)
+    {
+        ans += s[i];
+    }
+    return ans;
+}
+// T.C-> O(N*N)
+// S.C-> O(1)
+--------------------------------------------------------------------------------------------------
+7.Sum of Beauty of All Substrings
+
+int beautySum(string s)
+{
+    int n = s.size();
+    int ans = 0;
+    // Generate substrings and keep adding beauty of each substring!
+    for (int i = 0; i < n; i++)
+    {
+        // A map to store the freq of characters of substring
+        unordered_map<char, int> m;
+        for (int j = i; j < n; j++)
+        {
+            // Add the count of character
+            m[s[j]]++;
+            int minFreq = INT_MAX, maxFreq = INT_MIN;
+            // Iterate the map to get min and max frwq of current substring
+            for (auto &val : m)
+            {
+                minFreq = min(minFreq, val.second);
+                maxFreq = max(maxFreq, val.second);
+                // Add the beauty of current substring
+                ans += (maxFreq - minFreq);
+            }
+        }
+        return ans;
+    }
+}
+// T.C->O(N^2*26) or O(N^2*logN*26) -> depending in type of map
+// S.C->O(26)
+-----------------------
+A bit optimal: Use hash array
+int beauty(vector<int> &v)
+{
+    // Iterate over the hash array and find the beauty
+    int minFreq = INT_MAX, maxFreq = INT_MIN;
+    for (auto &val : v)
+    {
+        if (val > 0)
+        {
+            minFreq = min(minFreq, val);
+            maxFreq = max(maxFreq, val);
+        }
+    }
+    return maxFreq - minFreq;
+}
+
+int beautySum(string s)
+{
+    int n = s.size();
+    int ans = 0;
+    // Generate substrings and keep adding beauty of each substring!
+    for (int i = 0; i < n; i++)
+    {
+        // A map to store the freq of characters of substring
+        vector<int> hash(26, 0);
+        for (int j = i; j < n; j++)
+        {
+            // Add the count of character
+            hash[s[j] - 'a']++;
+            // Add the beauty of current substring
+            ans += beauty(hash);
+        }
+    }
+    return ans;
+}
+// T.C->O(N^2*26)
+// S.C->O(26)
+--------------------------------------------------------------------------------------------------
+8) Reverse Words in a String
+
+class Solution {
+public:
+    string reverseWords(string s) {
+        stack<string> st;
+        string temp = "";
+        // Push each word in the stack and then pop one by one to get the required result
+        for(int i=0;i<s.size();i++){
+            if(s[i]!=' '){
+                temp += s[i];
+            }
+            else{
+                if(temp!="")
+                    st.push(temp);
+                temp = "";
+            }
+        }
+        // Push the last word
+        if(temp != ""){
+            st.push(temp);
+        }
+        // Pop each word and add it to answer with space
+        string ans="";
+        while(st.size()!=1){
+            ans +=(st.top()+" ");
+            st.pop();
+        }
+        // As its the last word to be pushed we don't have to add space!
+        ans += st.top();
+        return ans;
+    }
+};
