@@ -52,6 +52,7 @@ public:
         // increase size of Queue
         size++;
     }
+     
     int Front()
     {
         // Queue is empty

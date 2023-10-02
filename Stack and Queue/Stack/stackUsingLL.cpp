@@ -91,6 +91,4 @@ int main()
     s.pop();
     cout << s.peek() << "\n";
     cout<<s.Size()<<"\n";
-
-    ////////////////////
 }

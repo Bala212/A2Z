@@ -26,9 +26,10 @@ public:
 // Function to push an integer into the stack.
 void MyStack ::push(int x)
 {
-    if (top == size-1)
+    if (top == size - 1)
     {
-        cout << "Stack is full, "<<x<<" "<<"can't be pushed\n";
+        cout << "Stack is full, " << x << " "
+             << "can't be pushed\n";
         return;
     }
     top++;
@@ -72,8 +73,7 @@ int main()
     s.push(4);
     while (!s.empty())
     {
-        cout << s.topEle()<<" ";
+        cout << s.topEle() << " ";
         s.pop();
     }
 }
-
