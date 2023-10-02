@@ -89,8 +89,8 @@ ListNode *reverseList(ListNode *head)
     // Return new head of reversed LL
     return node;
 }
-// T.C -> O(N)
-// S.C -> O(N) -> Recurive stack
+//! T.C -> O(N)
+//! S.C -> O(N) -> Recurive stack
 // --------------------------------------------------------------------------------------------------
 // 5. Detect a loop in linked list
 // Using map/set
