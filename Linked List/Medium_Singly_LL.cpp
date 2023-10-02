@@ -365,7 +365,7 @@ ListNode *removeNthFromEnd(ListNode *head, int n)
     dummy->next = head;
     if (head == NULL)
         return NULL;
-    // Declare two pointers initioalized with dummy node
+    // Declare two pointers initialized with dummy node
     ListNode *slow = dummy;
     ListNode *fast = dummy;
     // bring fast pointer to nth node
@@ -393,7 +393,6 @@ ListNode *removeNthFromEnd(ListNode *head, int n)
 // 11.Delete the middle node of LL
 ListNode *deleteMiddle(ListNode *head)
 {
-
     // If empty or a single node
     if (head == NULL || head->next == NULL)
         return NULL;
@@ -490,7 +489,7 @@ public:
 // T.C -> O(N*logN)
 // S.C -> O(1)
 // --------------------------------------------------------------------------------------------------
-// 13) Sort linked list of 0s 1s 2s without changing links
+// 13) Sort linked list of 0s 1s 2s by changing links
 Node* sortList(Node *head){  
     // Create three dummy nodes for the heads of three lists
     Node* zeroHead = new Node(0);
@@ -623,8 +622,12 @@ ListNode *getIntersectionNode(ListNode *headA, ListNode *headB)
 // --------------------------------------------------------------------------------------------------
 // Q.15 Add two number represented by LL
 ListNode *addTwoNumbers(ListNode *l1, ListNode *l2)
-{
+{   
+    // HERE LIST'S ARE GIVEN IN REVERSE ORDER, SO NO NEED TO REVERSE FIRST.
+    // AND ALSO FOR THIS QUESTION, WE NEED OT RETURN ANS IN REVERSE ORDER TOO, SO NO NEED TO REVERSE LIST AT END.
 
+    // BUT, IN OTHER CASES, WE NEED TO REVERSE BOTH LL FIRST, AND THEN APPLY THE SAME LOGIC, AND AT LAST REVERSE THE ANS LL TOO.
+    
     // Create a node to which our new LL will be attached
     ListNode *ans = new ListNode(0);
 
@@ -638,7 +641,6 @@ ListNode *addTwoNumbers(ListNode *l1, ListNode *l2)
     // at last when carry becomes zero, that case is also handled here
     while (l1 != NULL || l2 != NULL || carry != 0)
     {
-
         // everytime we have to calculate new sum
         int sum = 0;
 
@@ -676,6 +678,99 @@ ListNode *addTwoNumbers(ListNode *l1, ListNode *l2)
 // Time Complexity: O(max(m,n))
 // Space Complexity: O(max(m,n)). The length of the new list is at most max(m,n)+1.}
 // --------------------------------------------------------------------------------------------------
+// Q.16 Add one to a number represented as Linked List
+/**
+ * Definition of linked list:
+ *
+ * class Node {
+ * public:
+ *      int data;
+ *      Node *next;
+ *      Node() {
+ *          this->data = 0;
+ *          this->next = NULL;
+ *      }
+ *      Node(int data) {
+ *          this->data = data;
+ *          this->next = NULL;
+ *      }
+ *      Node (int data, Node *next) {
+ *          this->data = data;
+ *          this->next = next;
+ *      }
+ * };
+ *
+ *************************************************************************/
+
+ Node* reverse(Node* head){
+    Node* prev = NULL;
+    Node* curr = head;
+
+    while(curr != NULL){
+        Node* forward = curr->next;
+
+        curr->next = prev;
+
+        prev = curr;
+
+        curr = forward;
+    }
+
+    return prev;
+ }
+
+Node *addOne(Node *head)
+{
+    if(head == NULL  || head->next == NULL) return head;
+
+    // reverse the LL, to find the sum, as we can traverse LL front only
+    head = reverse(head);
+
+    // create dummy node
+    Node *ans = new Node(0);
+
+    // to iterate and link new nodes
+    Node *temp = ans;
+
+    // initialise carry with 1
+    int carry = 1;
+
+    // Loop will break when, l1==NULL && l2==NULL && carry==0
+    // at last when carry becomes zero, that case is also handled here
+    while (head != NULL || carry != 0)
+    {
+        // everytime we have to calculate new sum
+        int sum = 0;
+
+        // if pointers are not NULL add their value to sum
+        if (head != NULL)
+        {
+            sum += head->data;
+            head = head->next;
+        }
+
+        // add previos carry into sum
+        sum += carry;
+
+        // calculate current carry, that should be added to the next sum
+        carry = sum / 10;
+
+        // create a node with value sum%10 and link it with ans LL
+        Node *node = new Node(sum % 10);
+
+        // link the node with ans
+        temp->next = node;
+
+        // move ahead of pointer of answer LL
+        temp = temp->next;
+    }
+    
+
+    // return reversed Ans, as ans will store reverse of orginal ans( take pen and paper)
+    return reverse(ans->next);
+}
+// ---------------------------------------------------------------------------------------
+
 // 17.Merge two sorted linked lists
 ListNode *mergeTwoLists(ListNode *list1, ListNode *list2)
 {

@@ -1,0 +1,7 @@
+git add .
+git commit -m "message"
+git remote add origin "repoLink"
+git push -u origin main
+
+git status
+git log --oneline
