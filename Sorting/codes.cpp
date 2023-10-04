@@ -245,7 +245,7 @@ Best Case: O(N), as while loop will not run, if the array is already sorted.
 ************************************************************************************************************************************
 4) Merge sort
 
-Divide divide divide and then merge sortedly!!
+//! Divide divide divide and then merge sortedly!!
 The intuition behind merge sort is to divide the unsorted array into smaller 
 subarrays, recursively sort them, and then merge the sorted subarrays to obtain 
 the final sorted array.
@@ -299,7 +299,7 @@ void merge(vector<int> &arr, int low, int mid, int high) {
     // Copy the sorted elements from the temporary array back to the original array
     for (int i = low; i <= high; i++) {
         arr[i] = temp[i - low]; // i-l-> l-l -> 0
-                              // i+1-l-> l+1-l -> 1 and so on
+                                // i+1-l-> l+1-l -> 1 and so on
     }
 }
 
@@ -325,7 +325,7 @@ Space complexity: O(n)
 Reason: We are using a temporary array to store elements in sorted order.
 
 Auxiliary Space Complexity: O(n)
-************************************************************************************************************************************
+**********************************************************************************************************************************
 5) Quick sort
 
 1) Pick a pivot( can be any element) and place it in its correct place in the sorted 
@@ -433,13 +433,3 @@ Worst Case Time complexity: O(N*N)
 
 Space Complexity: O(1) + O(N) auxiliary stack space.
 +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-
-
-
-
-
-
-
-
-
-
