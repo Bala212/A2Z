@@ -115,13 +115,13 @@ This optimization reduces the number of unnecessary comparisons and iterations.
 
 ************************************************************************************************************************************
 3) Insertion sort
-#Takes an element an place it in it's correct position.
+#Takes an element an place it in its correct position.
 
 a) Swapping->
 #include <bits/stdc++.h> 
 void insertionSort(int n, vector<int> &arr){
     // loop from 0 to n-1, as we have to pick each element and
-    // place it in it's correct position
+    // place it in its correct position
     for (int i = 0; i <= n - 1; i++) {
         // Take i, as we have to place it!!
         int j = i;
