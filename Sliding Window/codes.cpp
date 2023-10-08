@@ -1239,6 +1239,8 @@ And logic to maintain unique characters is used of K unique/distinct characters 
         // count number of subarrays with at most k characters
         int ans = 0, l = 0, r = 0;
 
+        // IF USING MAP IS GIVING TLE, WE CAN ALSO USE VECTOR OF SIZE 26, AND STORE CHARACTERS AS [ch - 'a']
+
         unordered_map<char,int> m;
 
         // To store unique characters of a window

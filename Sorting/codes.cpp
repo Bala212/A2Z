@@ -416,8 +416,8 @@ Here k is the number of elements smaller or equal to the pivot and n-1-k denotes
 
 There can be 2 cases :
 
-Worst Case – This case occurs when the pivot is the greatest or smallest element of the array. If the partition is done and the last element is the 
-             pivot, then the worst case would be either in the increasing order of the array or in the decreasing order of the array. 
+Worst Case – This case occurs when the pivot is the greatest or smallest element of the array. If the partition is done and the last 
+element is the pivot, then the worst case would be either in the increasing order of the array or in the decreasing order of the array. 
 
 Recurrence:
 F(n) = F(0)+F(n-1)  or  F(n) = F(n-1) + F(0) 
@@ -432,4 +432,4 @@ Time Complexity for the best and average case: O(N*logN)
 Worst Case Time complexity: O(N*N) 
 
 Space Complexity: O(1) + O(N) auxiliary stack space.
-+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
