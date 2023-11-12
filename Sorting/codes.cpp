@@ -115,7 +115,7 @@ This optimization reduces the number of unnecessary comparisons and iterations.
 
 ************************************************************************************************************************************
 3) Insertion sort
-#Takes an element an place it in its correct position.
+#Takes an element an place it in its correct position in sorted part
 
 a) Swapping->
 #include <bits/stdc++.h> 
