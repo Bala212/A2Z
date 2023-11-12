@@ -358,7 +358,7 @@ int partitionArray(int arr[], int low, int high) {
     while (i < j) {
         // Find the first element from the left that is greater than the pivot
         while (i < high && arr[i] <= pivot)
-            i++;
+            i++;    
 
         // Find the first element from the right that is smaller than or equal to the pivot
         while (j >= low && arr[j] > pivot)
