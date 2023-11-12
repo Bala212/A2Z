@@ -318,8 +318,8 @@ void mergeSort(vector<int>& arr, int low, int high) {
 }
 
 Time complexity: O(nlogn) if n = 16, there will be 4 divisions.(16 = 2^4)
-Reason: At each step, we divide the whole array, for that logn and we assume n steps are taken to get 
-sorted array, so overall time complexity will be nlogn
+Reason: At each step, we divide the whole array, for that logn and O(n) is taken for each step to merge two sorted arrays
+        so overall time complexity will be nlogn.
 
 Space complexity: O(n)  
 Reason: We are using a temporary array to store elements in sorted order.
