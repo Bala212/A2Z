@@ -582,7 +582,8 @@ Therefore, the overall time complexity will be O(logN * (N+N)) = O(2N*logN).
 Space Complexity: O(N), as in the merge sort We use a temporary array to store elements in sorted order.
 ---------------------------------------------------------------------------------------------------------------------------------------------------------------------
 14) Maximum product subarray
-*The product is present on either start or end of the array i.e prefix or suffix !!int maxProduct(vector<int> & nums)
+*The product is present on either start or end of the array i.e prefix or suffix !!
+int maxProduct(vector<int> & nums)
 {
     int n = nums.size();
     int ans = INT_MIN;
