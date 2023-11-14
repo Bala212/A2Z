@@ -236,7 +236,7 @@ int count(int arr[], int n, int x)
 // --------------------------------------------------------------------------------------------------
 // 8.Search in Rotated Sorted Array I (Without duplicates)
 
-// Sorted part konta ae shodha ani jas target tithe asel tr tya part la BS lava
+// Sorted part konta ae shodha ani jar target tithe asel tr tya part la BS lava
 // nahi tr dusrya part la move kara!!
 int search(vector<int> &nums, int target)
 {
@@ -286,7 +286,7 @@ bool search(vector<int> &nums, int target)
             return true;
         // This is the condition added!
         // we are direct eliminating low and high, coz we are sure that they are not the element we are
-        // looking for
+        // looking for as it will checked above only.
         if (nums[low] == nums[mid] && nums[mid] == nums[high])
         {
             low++;
