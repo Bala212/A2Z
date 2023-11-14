@@ -1,4 +1,4 @@
-// 1.Search an element
+// 1.Search an element in sorted array
 int search(vector<int> &nums, int target)
 {
     int n = nums.size();
@@ -54,7 +54,7 @@ int lowerBound(vector<long long> v, long long n, long long x)
 // S.C-> O(1)
 // --------------------------------------------------------------------------------------------------
 // 3.Implement Upper Bound
-// just ">=" -- > ">"
+// just ">=" --> ">"
 int upperBound(vector<long long> v, long long n, long long x)
 {
     // Your code here
@@ -117,7 +117,7 @@ int ceil(int x, int arr[], int n)
         }
         else
         {
-            low = mid + 1;
+            low = mid + 1;qljr
         }
     }
     return ans;
