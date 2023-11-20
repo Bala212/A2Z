@@ -932,3 +932,143 @@ public:
         return cnt;
     }
 };
+
+--------------------------------------------------------------------------------------------------
+17) K Sum Paths
+https://leetcode.com/problems/path-sum-iii/
+
+1) Brute: Same as N^2 in array (gives TLE)
+
+class Solution {
+public:
+
+    // Variable to store the count of paths with the target sum
+    int ans = 0;
+
+    // Recursive function to find paths with the target sum starting from a given node
+    void findSum(TreeNode* root, int k, int currSum){
+        // Base case: If the node is null, return
+        if(!root) return;
+
+        // Update the current sum by adding the value of the current node
+        currSum += root->val;
+
+        // If the current sum is equal to the target sum, increment the answer count
+        if(currSum == k) ans++;
+
+        // Recursively explore paths in the left and right subtrees
+        findSum(root->left, k, currSum);
+        findSum(root->right, k, currSum);
+    }
+
+    // Function to find paths with the target sum in the entire tree
+    int pathSum(TreeNode* root, int targetSum) {
+        // Base case: If the root is null, there are no paths
+        if(!root) return 0;
+
+        // Call the helper function to find paths starting from the current node
+        findSum(root, targetSum, 0);
+
+        // Recursively explore paths in the left and right subtrees
+        pathSum(root->left, targetSum);
+        pathSum(root->right, targetSum);
+
+        // Return the total count of paths with the target sum
+        return ans;
+    }
+};
+
+// T.C-> N^2
+
+
+2) Map vala approach, same as array like looking for sum - k before!
+
+class Solution {
+public:
+
+    // Variable to store the count of paths with the target sum
+    int ans = 0;
+
+    // Recursive function to find paths with the target sum starting from a given node
+    void findSum(TreeNode* root, int k, long long currSum, unordered_map<long long, int> &m){
+        // Base case: If the node is null, return
+        if(!root) return;
+
+        // Update the current sum by adding the value of the current node
+        currSum += root->val;
+
+        // If there is a subarray sum (currSum - k) encountered before, increment the answer count
+        ans += m[currSum - k];
+
+        // Update the frequency of the current cumulative sum in the map
+        m[currSum]++;
+
+        // Recursively explore paths in the left and right subtrees
+        findSum(root->left, k, currSum, m);
+        findSum(root->right, k, currSum, m);
+
+        // Backtrack: Decrement the frequency of the current cumulative sum and update the current sum
+        // right kade jaych ahe na parat yeun (left kadun) tyamule je add kela ahe te kadhava lagel na
+        m[currSum]--;
+        currSum -= root->val;
+    }
+
+    // Function to find paths with the target sum in the entire tree
+    int pathSum(TreeNode* root, int k) {
+        // Base case: If the root is null, there are no paths
+        if(!root) return 0;
+
+        // Initialize an unordered map to store cumulative sums and their frequencies
+        unordered_map<long long, int> m;
+        // Initialize the map with a dummy entry to account for paths starting from the root
+        m[0]++;
+
+        // Initialize the current cumulative sum
+        long long currSum = 0;
+
+        // Call the helper function to find paths starting from the current node
+        findSum(root, k, currSum, m);
+
+        // Return the total count of paths with the target sum
+        return ans;
+    }
+};
+
+T.C-> N or NlogN (depends on map!, uk)
+
+// OR (not keeping global 'ans' variable, returning count from function itself)
+class Solution {
+public:
+    int findSum(TreeNode* root, int k, long long currSum, unordered_map<long long, int> &m){
+        if(!root) return 0;
+
+        currSum += root->val;
+
+        int cnt = m[currSum - k];
+
+        m[currSum]++;
+
+        int left = findSum(root->left, k, currSum, m);
+        int right = findSum(root->right, k, currSum, m);
+
+        m[currSum]--;
+
+        currSum -= root->val;
+
+        return cnt + left + right;
+    }
+
+    int pathSum(TreeNode* root, int k) {
+
+        if(!root) return 0;
+
+        unordered_map<long long, int> m;
+
+        m[0]++;
+
+        long long currSum = 0;
+
+        return findSum(root, k, currSum, m);
+
+    }
+};
