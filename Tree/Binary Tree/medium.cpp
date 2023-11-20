@@ -1044,10 +1044,9 @@ public:
 
         currSum += root->val;
 
-        int cnt = m[currSum - k];
-
         m[currSum]++;
 
+        int cnt = m[currSum - k];
         int left = findSum(root->left, k, currSum, m);
         int right = findSum(root->right, k, currSum, m);
 
