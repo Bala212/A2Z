@@ -56,7 +56,7 @@ public:
                 // If the current element is 1, it means that this row has not encountered a 0 yet.
                 // This row might be a candidate for having all 1s. We update 'ans' to the current
                 // row index (i) and move one column to the left (j--) to check for 0s in the same row.
-                ans = i;
+                ans = i; //kontya row la continue hot ahe 1's
                 j--;
             }
             else if (arr[i][j] == 0) {
