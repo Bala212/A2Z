@@ -117,7 +117,7 @@ int ceil(int x, int arr[], int n)
         }
         else
         {
-            low = mid + 1;qljr
+            low = mid + 1;
         }
     }
     return ans;
