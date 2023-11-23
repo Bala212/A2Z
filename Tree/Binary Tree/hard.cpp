@@ -95,7 +95,11 @@ Space complexity: O(N), auxiliary space.
 
 ------------------------------------------------------------------------------------------------------------------------------------------------------------------
 3) Maximum width of a Binary Tree
-Assigning indexes to each node, and calculating width of each level with this indexes
+
+Solution 1 : For any tree, max width = no. of leaf nodes(including NULL) = 2^(h-1) where h is height of tree.
+            But, this overflows in case of skew trees with height equal to 1e5
+
+Solution 2: Assigning indexes to each node, and calculating width of each level with this indexes
 and maximize it always!!
 See my notes!!
 
