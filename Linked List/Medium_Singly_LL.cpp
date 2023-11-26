@@ -294,7 +294,6 @@ bool isPalindrome(ListNode *head)
 // --------------------------------------------------------------------------------------------------
 //Q. Segrregate odd and even nodes in LL
 
-
 // Pen paper ghe!!
 class Solution {
 public:
