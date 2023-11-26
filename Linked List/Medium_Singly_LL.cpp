@@ -718,6 +718,7 @@ ListNode *addTwoNumbers(ListNode *l1, ListNode *l2)
     return prev;
  }
 
+// INITIALLY CARRY 1 GHE, KARAN L2 NHIYE ITHE ANI FIRST NODE LA NEHMI 1 CH ADD HONAR
 Node *addOne(Node *head)
 {
     if(head == NULL  || head->next == NULL) return head;
