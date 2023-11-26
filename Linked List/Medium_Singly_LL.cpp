@@ -307,9 +307,9 @@ public:
         while(odd->next != NULL && even->next != NULL)
         {
             odd->next = even->next;
-            odd = odd->next;
+            odd = odd->next; // link kelya kelya pudhe sarak
             even->next = odd->next;
-            even = even->next;
+            even = even->next; // link kelya kelya pudhe sarak
         }
         odd->next = q;
         return head;
