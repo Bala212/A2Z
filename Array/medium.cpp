@@ -697,3 +697,34 @@ int findAllSubarraysWithGivenSum(vector<int> &arr, int k)
 }
 // T.C-> O(N) or O(N*logN) depending on which map data structure we are using, where N = size of the array.
 // S.C-> O(N)
+---------------------------------------------------------------------------------------------------------------------------------------------------------------------
+15. Number of subarrays with maximum values in given range
+https://www.geeksforgeeks.org/problems/number-of-subarrays-with-maximum-values-in-given-range5949/1
+
+// Given an array of N elements and L and R, print the number of sub-arrays such that the value of the maximum 
+// array element in that subarray is at least L and at most R.
+
+class Solution{
+    public:
+    long countSubarrays(int a[], int n, int L, int R)
+    {
+        long i = 0, j = 0, count = 0,m = 0;
+        
+        while(j<n){
+            // Skip the window whose max element is greater than R
+            if(a[j] > R){
+                m = 0;
+                i = j + 1;
+            }
+            // if element is in range, add number of subarrays that can ve created with current window size
+            else if(a[j] <= R && a[j] >= L){
+                m = j - i + 1;
+            }
+            
+            count += m;
+            
+            j++;
+        }
+        return count;
+    }
+};
