@@ -1,11 +1,11 @@
-* C++ Inventor -> Bjarne Stoustrup
+*C++ Inventor -> Bjarne Stoustrup
 
 *Difference between C and C++
 -->C++ supports both procedural and object-oriented programming, while C supports only procedural-oriented programming. 
   Hence, C is a subset of C++.
 -->C++ supports polymorphism, encapsulation, inheritance, overloading, namespace, reference variable, templates, and 
    exception handling, which C does not have.
--->C++ supports STL but C does not. This is the most important.
+-->C++ supports STL but C does not. //! This is the most important.
 -> C++ is a extension of C.
 ->Namespace features are not present in C, Namespace is used by C++, which avoids name collisions.
 ->calloc() and malloc() functions are used for memory allocation and free() function is used for memory deallocation in C, 
@@ -17,7 +17,6 @@
    i.e.we first implement all the functions we need and then at the end we implement main function and procedure of which 
    function to call when.
 --------------------------------------------------------------------------------------------------------------------------
-
 * why  C and C++ is platform depended?
 -> platfrom consists of processor/cpu and operating system.
 -> The code which can only be run on same platform on which it was compiled. it is called as platform dependent.
@@ -67,7 +66,7 @@
 ->when any program starts, it first loads in RAM, in 16 bit architecture our program gets 64kb memory. In memory, we have 
   two sections one is to store instructions and one is to store data.
 
----------------------------------------------------------------------------------------------------------------------------------------------------
+-----------------------------------------------------------------------------------------------------------------------------
 
 --> Variables are the names of memory locations where we store data.
 1. Ordinary Variable:
@@ -88,6 +87,7 @@ p = &x; //(p = 201 i.e address of x gets assigned to p)
 --> Reference variables cannot be updated
 --> We cannot read it as a address of variable. if & is present on right side then we read it address of.
 --> Modern style of pointer. It is an internal pointer
+--> does not have any memory
 
 int &y = x;
 y++;
@@ -111,7 +111,8 @@ Reference variable should be declared at time of initialization only, but not ma
 reference:
 int &ref = var1;
 
--> I will use pointers when I want to initialize it with nothing later on in runtime I will change it or when I want to initialize with null pointer
+-> I will use pointers when I want to initialize it with nothing later on in runtime I will change it or when I want to 
+	initialize with null pointer
 -> I will use pointer when I want dynamic memory allocation
 -> I will use pointer when I want to update the pointers
 
@@ -270,11 +271,11 @@ https://www.geeksforgeeks.org/dynamic-memory-allocation-in-c-using-malloc-calloc
 				4. Better memory utilization (Only the functions in use are present in RAM)
 	*/
 e.g.
-int sum(int x, int y){    // -> This x and y are formal arguments
+int sum(int x, int y){    // -> This x and y are formal arguments/ also known as parameters
     return x+y;
 }
 int main(){
-   cout<<sum(a,b)<<endl;  // -> This a and b are actual arguments
+   cout<<sum(4,5)<<endl;  // -> This a and b are actual arguments/ also known as arguments
 }
 
 
@@ -358,7 +359,7 @@ int main(){
 -> a pointer can be reassigned but a reference can not
 -> pointer can be assigned to null but reference cant be
 -> a pointer has a different memory address than that variable but in case of reference, reference variable and 
-   pointer variable has same address --> https://chat.openai.com/c/14478994-b355-4a1e-8d1d-54b5db0bae2a
+   original variable has same address --> https://chat.openai.com/c/14478994-b355-4a1e-8d1d-54b5db0bae2a
 
    //! Why we prefer reference on pointers?
 -> References cannot be null, so if you want to ensure that the function always receives a valid object, pass by 
@@ -370,9 +371,10 @@ Functions:
 -> adv:(saves memory space)Function in a program is to save memory space which becomes appreciable when a function is likely 
    to be called many times.
 
--> disadv(time consuming):However every time a function is called, it takes lot of extra time in executing a series of instructions 
-   for tasks such as jumping to functions, pushing arguments to stacks.
--> so when function is small it is worthless to spend so much extra time in such tasks in cost of saving comparatively small space.
+-> disadv(time consuming):However every time a function is called, it takes lot of extra time in executing a series of 
+instructions for tasks such as jumping to functions, pushing arguments to stacks.
+-> so when function is small it is worthless to spend so much extra time in such tasks in cost of saving comparatively 
+   small space.
 -> //! so there is a problem in making small functions.
 ---------------------------------------------------------------------------------------------------------------------------------------------------
 
@@ -434,6 +436,8 @@ int main() {
 }	
 
 // Assigning default values starts from right side
+Because, Arguments are matched from left to right !!
+
 int add(int, int, int = 0);
 int main() {
 	int a = 2, b = 3, c = 5;
@@ -443,6 +447,8 @@ int main() {
 int add(int x, int y, int z) {
 	return x + y + z;
 }
+
+
 ---------------------------------------------------------------------------------------------------------------------------------------------------
 *Function Overloading: (Complile time polymorphism)
 
@@ -456,11 +462,11 @@ int add(int x, int y, int z) {
 	IMP: 
         int area(int,int);
 	    float area(int,int);
-	    This will give error. //! Type or count of arguments has to be different 
+	    This will GIVE error. //! Type or count of arguments has to be different 
             BUT,
         int area(int);
 	    float area(int,int);
-	    This will not give error. Type or count of arguments are different 
+	    This will NOT GIVE error. Type or count of arguments are different 
 
 		When one of the cases is true, function overloading is seen:
 			1. Parameters should have a different type if no. of parameters are same
@@ -494,7 +500,7 @@ int sum(int x, int y) {
 }
 
 int sum(int x, int y, int z) {	 
-return x + y + z; 
+	return x + y + z; 
 
 
 }
