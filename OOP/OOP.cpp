@@ -1,4 +1,4 @@
-*C++ Inventor -> Bjarne Stoustrup
+Point myPoint;*C++ Inventor -> Bjarne Stoustrup
 
 *Difference between C and C++
 -->C++ supports both procedural and object-oriented programming, while C supports only procedural-oriented programming. 
@@ -530,7 +530,8 @@ Sum of 1.1 & 2.9 is:(Prints sum of floor values) 3
 --> Memory is only assigned when structure variable/instance of struct is created and not when struct is defined.
 --> Structure can be created globally and locally inside the main function also. if it is created inside main function then 
     it only can be accessed inside the main function and if it is created globally then it can be accessed anywhere in the program.
--> //! IMP: Writing the keyword struct before declaring a new structure variable is optional in C++ but mandatory in C
+-> //! IMP: Writing the keyword struct before declaring(creating a struct object in main function) 
+   //! is optional in C++ but mandatory in C
 
 	    Some ways to create and initialize structure variable -->
 
@@ -573,7 +574,7 @@ private:
 	string name;
 	int age;
 public:	
-	//! Structs can also have constructors
+	//! Structs can also have constructors, but not in C
 	Employee() {
 		eID = 0;
 		name = "";
@@ -845,8 +846,8 @@ Public
 Private
 Protected
 
-// !If we do not specify any access modifiers for the members inside the class, then by default the access modifier for the members
-// !will be Private.
+//! If we do not specify any access modifiers for the members inside the class, then by default the access modifier for the members
+//! will be Private.
  1. Public: All the class members declared under the public specifier will be available to everyone. The data members and member
             functions declared as public can be accessed by other classes and functions too. The public members of a class can 
 			be accessed from anywhere in the program using the direct member access operator (.) with the object of that class. 
@@ -886,13 +887,41 @@ int main()
 3. Protected: The protected access modifier is similar to the private access modifier in the sense that it can’t be accessed
               outside of its class unless with the help of a friend class. The difference is that the class members declared
 			  as Protected can be accessed by any subclass (derived class) of that class as well. 
----------------------------------------------------------------------------------------------------------------------------------------------------
-*Static local variables: (Variable of a class!)
+-----------------------------------------------------------------------------------------------------------------------------
+*Static local variables: (//! Variable of a class!)
 --> Concept is taken from C
 --> By default, initialized to 0 and not some garbage value.
 --> Only one copy is present throughout the lifecycle of the program.
 --> Can be used to implement co-routines in C/C++
 
+//! Static keyword without class
+// C++ program to demonstrate the use of static Static variables in a Function
+#include <iostream>
+#include <string>
+using namespace std;
+ 
+void demo()
+{
+    // static variable
+    static int count = 0;
+    cout << count << " ";
+ 
+    // value is updated and
+    // will be carried to next
+    // function calls
+    count++;
+}
+ 
+int main()
+{
+    for (int i = 0; i < 5; i++)
+        demo();
+    return 0;
+}
+
+Output
+0 1 2 3 4 
+----------------------------------
   void fun(){
 	static int x;
 	x++;
@@ -901,7 +930,7 @@ int main()
   }
 
 when we call fun function then only y variable will get memory but x variable get memory at the start of program.
----------------------------------------------------------------------------------------------------------------------------------------------------
+--------------------------------------------------------------------------------------------------------------------------
 *Static Member Variables:
 --> Declared inside the class body
 --> Belongs to class, not the object!
@@ -909,21 +938,23 @@ when we call fun function then only y variable will get memory but x variable ge
 --> must be defined outside the class (MANDATORY)
 --> They do not belong to any object but belong to the entire class.
 --> Only one copy of static member variable for the whole class throughout the runtime of the program.
---> They can also be used with class name.
+--> //! They can also be used with class name.
 --> Memory for static member variable only gets allocated after member definition and not after declaration.
 --> It is created even if the object is not created!
+//! static members cannot be initialized inside class!
 
 --> Since static member variable is class variable, it can be accessed without an object
---> If it is a public member it can directly be accessed using className::staticVariableName
+--> If it is a public member it can directly be accessed using //! className::staticVariableName
 --> But if it is private/ protected we need to have some functions to get and set the values.
 --> But if the function is a member function, then it can only be accessed using objects.
 --> But we should be able to access static member variables without objects also.
 --> Thus, static member functions come into picture
----------------------------------------------------------------------------------------------------------------------------------------------------
-*Static Member Functions: (class member function!)
+---------------------------------------------------------------------------------------------------------------------------
+*Static Member Functions: (class member function!) 
 -->//! Can only access static member variables
---> Used to assign/set values to static variable which are private
---> Can also be invoked without an object
+--> //! Used to assign/set values to static variable which are private
+--> //! Can also be invoked without an object
+
 
     setRoi is the static member function, to set the value of static variable ‘roi’
     which is private. And is accessed in main function without creation of any object.
@@ -945,7 +976,7 @@ public:
 	}
 
 	/*
-	    We cannot use this pointer (->) with static member functions
+	    !We cannot use this pointer (->) with static member functions
 	    Example:
 	    this->rateOfInterest=rateOfInterest is not correct and causes CE
 	*/
@@ -969,6 +1000,9 @@ or not accessible during the linking phase, you will encounter the "undefined re
 
 float Account::rateOfInterest = 6.5f; // THIS LINE IS EXTREMELY IMPORTANT, It initializes a static variable!!
 
+
+//! a nonstatic data member may not be defined outside its classC/C++
+
 //! Though it is private, we can access it; as it is a member of class na!!
 
 int main() {
@@ -980,7 +1014,7 @@ int main() {
 ---------------------------------------------------------------------------------------------------------------------------------------------------
 *Constructors:
 --> The work of constructor is to make an object an object (Tough to understand statement:)
---> Instance Member function of class (Hence, can never be static)
+--> Instance Member function of class (//! Hence, can never be static)
 --> Name of constructor is same as class name
 --> Cannot use return keyword
 --> It is implicitly invoked when an object is created.
@@ -1016,8 +1050,8 @@ what a copy constructor is!
 --> Constructors do not return values; hence they do not have a return type.
 --> A constructor gets called automatically when we create the object of the class.
 --> Constructors can be overloaded. i.e. Multiple Constructor can be created with changing different parameters.
---> Constructor cannot be declared virtual.*In C++, the constructor cannot be virtual, because when a constructor of a class is executed, there is no virtual table in 
-the memory, means no virtual pointer defined yet.
+--> Constructor cannot be declared virtual.*In C++, the constructor cannot be virtual, because when a constructor of a class 
+    is executed, there is no virtual table in the memory, means no virtual pointer defined yet.
 -------------------------------------------------
 How to use Constructors in private section?
 
@@ -1054,7 +1088,8 @@ constructor of B
 However, constructors in C++ are not virtual. Constructors are automatically called when an object is created and are 
 responsible for initializing the objects data members and setting up its state. 
 //!Constructors are not inherited, and derived classes do not override base class constructors. 
--> When you create an object of a derived class, the base class constructor is called first, and then the derived class constructor is called.
+-> When you create an object of a derived class, the base class constructor is called first, and then the derived class constructor 
+   is called.
 In C++, virtual constructors are not supported because constructors are not like regular member functions. Constructors are 
 responsible for initializing the object's data members and setting up its state during object creation, and they have specific
 rules and behaviors that cannot be achieved using virtual functions.
@@ -1086,7 +1121,7 @@ Can we have more than one constructor in a class?
    a constructor which creates an object by initializing it with an object of the same class, which has been created previously 
    is known as a copy constructor.  
 -->The copy constructor can be defined explicitly by the programmer. If the programmer does not define the copy constructor, 
-   the compiler does it for us.
+   //! the compiler does it for us.
    // Copy constructor
     Point(const Point& p1)
     {
@@ -1097,8 +1132,8 @@ Can we have more than one constructor in a class?
 -->The default constructor does only shallow copy. 
 -->Deep copy is possible only with a user-defined copy constructor. In a user-defined copy constructor, we make sure that pointers 
    (or references) of copied objects point to new memory locations. i.e. both the objects have different memory resources.
--->The main difference between Copy Constructor and Assignment Operator is that the Copy constructor makes a new memory storage every 
-   time it is called while the assignment operator does not make new memory storage.
+-->The main difference between Copy Constructor and Assignment Operator is that the Copy constructor makes a new memory storage 
+   every time it is called while the assignment operator does not make new memory storage.
 
 MyClass t1, t2;
 MyClass t3 = t1;  // ----> (1) default copy constructor
@@ -1115,9 +1150,9 @@ the copy constructor is used for creating new independent copies of objects, whi
 existing object with the content of another object.
 ----------------------------------------------------------------------------------------------
 ->Why argument to a copy constructor must be passed as a reference? 
-A copy constructor is called when an object is passed by value. Copy constructor itself is a function. So, if we pass an argument by 
-value in a copy constructor, a call to the copy constructor would be made to call the copy constructor which becomes a non-terminating 
-chain of calls. Therefore, compiler doesn’t allow parameters to be passed by value.
+A copy constructor is called when an object is passed by value. Copy constructor itself is a function. So, if we pass an argument 
+by value in a copy constructor, a call to the copy constructor would be made to call the copy constructor which becomes a 
+non-terminating chain of calls. Therefore, compiler doesn’t allow parameters to be passed by value.
 
 in class:
 Point(Point p){}
@@ -1128,7 +1163,8 @@ Point p2(p1)
 means, Point p = p1; // this will again give a call to copy contructor and goes on...
 -------------------------------------------------------------------------------------------
 ->Why argument to a copy constructor should be const?
-    One reason for passing const reference is, that we should use const in C++ wherever possible so that objects are not accidentally modified.
+    One reason for passing const reference is, that we should use const in C++ wherever possible so that objects are not 
+	accidentally modified.
 --------------------------------------------------------------------------------------------------
  Some important points:
 --> By default, when a programmer does not create any constructor by ownself, the compiler creates a default constructor 
@@ -1141,7 +1177,7 @@ means, Point p = p1; // this will again give a call to copy contructor and goes 
 *The compiler doesn’t create a default constructor if we write any constructor even if it is a copy constructor.
  
 *What happens when we write a normal constructor and don’t write a copy constructor?
-	The compiler creates a copy constructor if we don’t write our own. The compiler creates it even if we have written 
+	-->The compiler creates a copy constructor if we don’t write our own. The compiler creates it even if we have written 
         other constructors in a class.
 
 class Point(){
@@ -1444,7 +1480,7 @@ int main() {
 			This is because instance members belong to the object, whereas static members belong to the class.
 		--> Destructor name is same as class name preceded by ~(pronounced tilde) symbol.
 		--> No return type
-		--> No arguments, hence no overloading is possible.
+		--> //! No arguments, hence no overloading is possible.
 		--> It is invoked implicitly when object is going to get destroyed.
 
 	Use of destructor?
@@ -1634,7 +1670,6 @@ int main(){
 
 	    Should friend function be public or private?
 		--> That does not matter hehe, beacause it is not the member function anyways.
-
 	*/
    
    A a(3);
@@ -1773,12 +1808,13 @@ Merits:-
 
 Demerits:-
 1) Friend functions have access to private members of a class from outside the class which violates the law of the data hiding.
-2) Friend functions cannot do any run time polymorphism in its members.(cannot override friend function) 2nd point in characteristics.
-
+2) Friend functions cannot do any run time polymorphism in its members.(cannot override friend function) 
+   2nd point in characteristics.
+-------------------------------------------------------------------------------------------------------------
 5) Operator overloading using friend function
 
-In general, when we overload the operator,.. c1+c2 means that c1 is the caller object and c2 is passed as an argument, but as there is no caller object in 
-friend function we pass the caller object also as an argument
+In general, when we overload the operator,.. c1+c2 means that c1 is the caller object and c2 is passed as an argument, but as 
+there is no caller object in friend function we pass the caller object also as an argument
 
 c1+c2 ---> friend Complex operator+(Complex c1, Complex c2) //if using friend function
 c1+c2 ---> Complex operator+(Complex c2) //without using friend function
@@ -2001,7 +2037,7 @@ int main() {
 	                    class C: public B{
 
 	                    };
-						CLASS 'C' CAN ACCESS PROTECTED MEMBERS OF CLASS 'A'
+						! CLASS 'C' CAN ACCESS PROTECTED MEMBERS OF CLASS 'A'
 	        3. Multiple Inheritance
 	            --> More than one parent class
 	                Example:
@@ -2295,7 +2331,7 @@ public:
  
 int main() {
     D obj;
-    obj.x = 1;
+    obj.x = 1; // Ambuigity is there
     return 0;
 }
 
@@ -2481,7 +2517,8 @@ int main() {
 	*/
 	// p is an object pointer
 	Point p;
-	p.setData(2, 3);  // When the function is called, the memory gets allocated to this pointer, which stores the address of object p.
+	p.setData(2, 3);  // When the function is called, the memory gets allocated to this pointer, which stores the address of 
+					  //object p.
 	p.getData();
 }
 ---------------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -2635,6 +2672,14 @@ int main() {
 	b.A::showData();
 }
 
+The binding of function call to function body starts from Child class and proceeds to Parent class in Method Overriding
+But it stops at Child class if no match found in Method Hiding(Method overloading in Inheritance)
+
+And, simple method overloading is valid for a functions within a same class (Early binding and compile time polymorphism happens!)
+
+Compile time Polymorphism -> Early binding
+Runtime time Polymorphism -> Late/Dynamic binding
+
 Output:
 
 In print function of class B
@@ -2648,6 +2693,8 @@ In showData function of class A
 -->When a function is made virtual, the compiler focuses on the contents of the pointer and ignores the type of the pointer.
 -->When the function is made virtual, C++ determines which function is to be invoked at the runtime based on the type of the 
    object pointed by the base class pointer.
+
+//! This virtual keyword tells the compiler that late binding(binding at runtime) should take place for this function
 
 #include <bits/stdc++.h>
 using namespace std;
@@ -2677,6 +2724,10 @@ public:
     /*
         This virtual keyword tells the compiler that late binding(binding at runtime) should
         take place for this function
+
+		Virtual keyword is necessary because without this keyword, early binding of
+        print() function occurs and hence base/parent class function can be called using object
+        pointers
 
         Working concept behind virtual function link:
         https://www.youtube.com/watch?v=Z_FiER8aAqM&list=PLLYz8uHU480j37APNXBdPz7YzAi4XlQUF&index=45&ab_channel=C%2B%2BbySaurabhShuklaSir
@@ -2784,7 +2835,10 @@ e:\OOP\main.cpp:7:18: note: 	virtual void A::fun()
 
 class A has do nothing function .i.e which cannot be defined and eventually cannot be called. So we cannot make the object of A. 
 To utilize A we need to inherit it and override its method. 
-So here comes the concept of abstract class . It is suggested that a class with atleast one pure virtual function must be declared as abstract class.
+So here comes the concept of abstract class . It is suggested that a class with atleast one pure virtual function must be declared 
+as abstract class.
+
+Hehe, there is no abstract keyword in C++, add one or more Pure Virtual function in that class to make it Abstract.
 ----------------------------------------------------------
 #include <bits/stdc++.h>
 using namespace std;
@@ -2797,8 +2851,8 @@ public:
         print() function occurs and hence base/parent class function can be called using object
         pointers
 
-	    IMP: Virtual function has to be defined in inherited classs compulsory, if not then inherited class will also
-        become a abstract class as the pure virtual function of parent will be inherited as it is inherited class.
+	    !IMP: Virtual function has to be defined in inherited classs compulsory, if not then inherited class will also
+        !become a abstract class as the pure virtual function of parent will be inherited as it is inherited class.
     */
     virtual void print() = 0;
 };
@@ -2807,7 +2861,7 @@ public:
   pure virtual functions.**
 
 /*
-    For the inherited class, we override all the pure virtual function of base class
+    !For the inherited class, we override all the pure virtual function of base class
 */
 class Student : public Person
 {
@@ -2835,7 +2889,7 @@ int main()
         Abstract Class
             --> Any class which has one or more pure virtual functions is called Abstract class.
             --> One cannot create an object of Abstract class (can't instanciate it).
-	    --> There is no such keyword called abstract in C++.
+	    --> // !There is no such keyword called abstract in C++.
 	    --> Abstract class can have constructor.
     */
     // Person p; // This will give error, as Person is abstract and we cannot create objects of abstract classes.
@@ -2975,6 +3029,8 @@ Output:
 In class A
 In destructor of B
 In destructor of A
+
+//! Constructor cannot be virtual
 ----------------------------------------------------------------------------------------------------------------------------------------------------------------------
 ----------------------------------------------------------------------------------------------------------------------
 *Encapsulation:
@@ -2989,7 +3045,7 @@ Why encapsulation?
 
 -->it makes the object self sufficient so that it can store the data and also handle it i.e. using functions.
 
-Data hiding:
+*Data hiding:
 -->The data can be made only accessible to the functions wrapped in the same unit in an object. These functions provide the 
    interface between the object’s data and the program.  This insulation for the data from direct access by the program is called 
    data hiding.

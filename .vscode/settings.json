@@ -3,6 +3,7 @@
         "*.tcc": "cpp",
         "list": "cpp",
         "unordered_map": "cpp",
-        "random": "cpp"
+        "random": "cpp",
+        "functional": "cpp"
     }
 }
