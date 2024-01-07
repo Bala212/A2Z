@@ -1,6 +1,10 @@
 Note- first tell brute to the interviewer by removing binary search and, iterating 
 linearly.
 
+DETERMINING THE RANGE IS IMPORTANT
+LIKE, FOR SUBARRAY SUM PROBLEMS: MINIMUM SUM OF A SUBARRAY SHOULD BE MAX ELEMENT IN THE ARRAY NA, SO LOW WILL MAX ELE OF ARRAY
+AND HIGH WILL BE SUM OF ALL ELEMENTS
+
 // 1. Square root of a number
 long long int floorSqrt(long long int x)
 {
