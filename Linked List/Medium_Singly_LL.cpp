@@ -808,7 +808,7 @@ ListNode *mergeTwoLists(ListNode *list1, ListNode *list2)
         // in temp
         temp->next = l2;
 
-        // as l1 will be containing a larger value, which contradicts our algorithm so swap l1 and l2
+        // as l1 will be containing a smaller value, which contradicts our algorithm so swap l1 and l2
         swap(l1, l2);
     }
 
