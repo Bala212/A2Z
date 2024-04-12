@@ -311,6 +311,7 @@ public:
             even->next = odd->next;
             even = even->next; // link kelya kelya pudhe sarak
         }
+        // link odd's list and even's list
         odd->next = q;
         return head;
         
