@@ -736,7 +736,7 @@ Node *addOne(Node *head)
     // initialise carry with 1
     int carry = 1;
 
-    // Loop will break when, l1==NULL && l2==NULL && carry==0
+    // Loop will break when, head == null && carry==0
     // at last when carry becomes zero, that case is also handled here
     while (head != NULL || carry != 0)
     {
